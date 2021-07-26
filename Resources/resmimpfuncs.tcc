@@ -4,67 +4,53 @@
 
 /// @c Author Usama Azad.
 
-usa::string& usa::string::replace(char _old, char _new)
+usa::string& usa::string::replace(const char &_old, const char &_new)
 {
     return replace_ch(_old, _new);
 }
 
-usa::string& usa::string::replace_first(char _old, char _new)
+usa::string& usa::string::replace_first(const char &_old, const char &_new)
 {
     return replace_ch(_old, _new, true);
 }
 
-usa::string& usa::string::replace(std::string _old, std::string _new)
+usa::string& usa::string::replace(const std::string &_old, const std::string &_new)
 {
     return replace_str(_old, _new);
 }
 
-usa::string& usa::string::replace_first(std::string _old, std::string _new)
+usa::string& usa::string::replace_first(const std::string &_old, const std::string &_new)
 {
     return replace_str(_old, _new, true);
 }
 
 usa::string& usa::string::swapcase()
 {
-    usa::string& name = (*this);
-    for (int i = 0; i < name.size(); i++)
-    {
-        if ((int)name[i] >= 65 && (int)name[i] <= 90)
-        {
-            name[i] -= 65;
-            name[i] += 97;
-        }
-        else if ((int)name[i] >= 97 && (int)name[i] <= 122)
-        {
-            name[i] -= 97;
-            name[i] += 65;
-        }
-        name[i] = (char)name[i];
+    for (char& ch : *this) {
+        if (ch >= 0x41 && ch <= 0x5A)
+            ch += 0x20;
+        else if (ch >= 0x61 && ch <= 0x7A)
+            ch -= 0x20;
     }
-    return name;
+    return *this;
 }
 
 usa::string& usa::string::title()
 {
     this->toLowerCase();
-    if ((int)this->at(0) >= 97 && (int)this->at(0) <= 122)
-    {
-        this->at(0) -= 97;
-        this->at(0) += 65;
-    }
+
+    if (this->at(0) >= 0x61 && this->at(0) <= 0x7A)
+        this->at(0) -= 0x20;
 
     if (!this->is_contain_space())
-        if (!this->is_contain())
+        if (!this->is_contain_any(special_chars))
             return *this;
 
-    for (auto x : special_chars)
+    for (const char &x : special_chars)
         for (int i = 0; i < this->size(); i++)
-            if (x == this->at(i) || this->at(i) == ' ')
-                if ((int)this->at(i + 1) >= 97 && (int)this->at(i + 1) <= 122)
-                {
-                    this->at(i + 1) -= 97;
-                    this->at(i + 1) += 65;
-                }
+            if ((x == this->at(i) || this->at(i) == ' ') && i != this->size() - 1)
+                if (this->at(i + 1) >= 0x61 && this->at(i + 1) <= 0x7A)
+                    this->at(i + 1) -= 0x20;
 
     return *this;
 }
@@ -72,22 +58,17 @@ usa::string& usa::string::title()
 usa::string& usa::string::capitalize()
 {
     this->toLowerCase();
-    if ((int)this->at(0) >= 97 && (int)this->at(0) <= 122)
-    {
-        this->at(0) -= 97;
-        this->at(0) += 65;
-    }
 
-    if (!this->is_contain())
+    if (this->at(0) >= 0x61 && this->at(0) <= 0x7A)
+        this->at(0) -= 0x20;
+
+    if (!this->is_contain_any(special_chars))
         return *this;
 
     for (int i = 0; i < this->size(); i++)
         if (this->at(i) == '.' && i != this->size() - 1)
-            if ((int)this->at(i + 1) >= 97 && (int)this->at(i + 1) <= 122)
-            {
-                this->at(i + 1) -= 97;
-                this->at(i + 1) += 65;
-            }
+            if (this->at(i + 1) >= 0x61 && this->at(i + 1) <= 0x7A)
+                this->at(i + 1) -= 0x20;
 
     return *this;
 }
@@ -134,77 +115,68 @@ usa::string& usa::string::format(const std::vector<usa::string>& arr)
     return *this;
 }
 
-usa::string& usa::string::join(const string& obj, string delimiter)
+usa::string& usa::string::join(const string& obj, const string &delimiter)
 {
-    (*this) += delimiter += obj;
+    (*this) += (delimiter + obj);
     return *this;
 }
 
-usa::string& usa::string::join(std::vector<char> arr, string delimiter, bool swd)
+usa::string& usa::string::join(const std::vector<char> &arr, const string &delimiter, bool swd)
 {
-    for (int i = 0; i < arr.size(); i++)
-        if (swd)
-            (*this) += (delimiter + arr[i]);
-        else
-            (*this) += (arr[i] + delimiter);
+    for (const char &x : arr)
+        *this += swd ? delimiter + x : x + delimiter;
     return *this;
 }
 
-usa::string& usa::string::join(std::vector<string> arr, string delimiter, bool swd)
+usa::string& usa::string::join(const std::vector<string> &arr, const string &delimiter, bool swd)
 {
-    for (int i = 0; i < arr.size(); i++)
-        if (swd)
-            (*this) += delimiter + arr[i];
-        else
-            (*this) += arr[i] + delimiter;
+    for (const string& x : arr)
+        *this += swd ? delimiter + x : x + delimiter;
     return *this;
 }
 
-usa::string& usa::string::join(std::vector<std::string> arr, string delimiter, bool swd)
+usa::string& usa::string::join(const std::vector<std::string> &arr, const string &delimiter, bool swd)
 {
-    for (int i = 0; i < arr.size(); i++)
-        if (swd)
-            (*this) += delimiter + arr[i];
-        else
-            (*this) += arr[i] + delimiter;
+    for (const std::string &x : arr)
+        *this += swd ? delimiter + x : x + delimiter;
     return *this;
 }
 
-usa::string& usa::string::join(std::initializer_list<string> arr, string delimiter, bool swd)
+usa::string& usa::string::join(const std::initializer_list<string> &arr, const string &delimiter, bool swd)
 {
-    for (auto x : arr)
-        if (swd)
-            (*this) += delimiter + x;
-        else
-            (*this) += x + delimiter;
+    for (const string &x : arr)
+        *this += swd ? delimiter + x : x + delimiter;
     return *this;
 }
 
 usa::string& usa::string::reverse()
 {
-    string copy = (*this);
-    for (int i = 0, j = (this->size() - 1); i < this->size(); i++, j--)
-        this->at(j) = copy.at(i);
+    int len = this->size();
+    for (int i = 0; i < len / 2; i++)
+        this->at(i) = std::exchange(this->at(len - 1 - i), this->at(i));
     return *this;
 }
 
-vector<std::string> usa::string::split(const char* delimiter)
+vector<std::string> usa::string::split(const char &delimiter)
 {
+    if (count(delimiter) < 1) return {};
+    
     vector<std::string> tokens;
-    std::string::size_type start = 0;
-    std::string::size_type end = 0;
+    size_t start = 0, end = 0;
+    
     while ((end = this->find(delimiter, start)) != std::string::npos)
     {
-        tokens.push_back(this->substr(start, end - start));
+        tokens.emplace_back(trim_(this->substr(start, end - start)));
         start = end + 1;
     }
-    tokens.push_back(this->substr(start));
+
+    tokens.emplace_back(trim_(this->substr(start)));
     return tokens;
 }
 
 vector<std::string> usa::string::splitlines()
 {
-    return split("\n");
+    return split('\n');
 }
 
 #if __cplusplus >= 201103L
@@ -273,32 +245,18 @@ usa::string& usa::string::fill(int _start, int _end, char fillChar)
 
 usa::string& usa::string::toUpperCase()
 {
-    usa::string& name = (*this);
-    for (int i = 0; i < name.size(); i++)
-    {
-        if ((int)name[i] >= 97 && (int)name[i] <= 122)
-        {
-            name[i] -= 97;
-            name[i] += 65;
-        }
-        name[i] = (char)name[i];
-    }
-    return name;
+    for (char& ch : *this)
+        if (ch >= 0x61 && ch <= 0x7A)
+            ch -= 0x20;
+    return *this;
 }
 
 usa::string& usa::string::toLowerCase()
 {
-    usa::string& name = (*this);
-    for (int i = 0; i < name.size(); i++)
-    {
-        if ((int)name[i] >= 65 && (int)name[i] <= 90)
-        {
-            name[i] -= 65;
-            name[i] += 97;
-        }
-        name[i] = (char)name[i];
-    }
-    return name;
+    for (char& ch : *this)
+        if (ch >= 0x41 && ch <= 0x5A)
+            ch += 0x20;
+    return *this;
 }
 
 /// @c Done :):):) .....

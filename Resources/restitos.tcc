@@ -7,13 +7,13 @@
 /// @e convet_to_string.
 
 inline
-string __cdecl ItoS(int val)
+string __cdecl ItoS(const int &val)
 {
     return to_string(val);
 }
 
 inline
-string __cdecl CtoS(char val)
+string __cdecl CtoS(const char &val)
 {
     stringstream s;
     s << val;
@@ -21,7 +21,7 @@ string __cdecl CtoS(char val)
 }
 
 inline
-string __cdecl FtoS(float val)
+string __cdecl FtoS(const float &val)
 {
     stringstream s;
     s << val;
@@ -29,7 +29,7 @@ string __cdecl FtoS(float val)
 }
 
 inline
-string __cdecl DtoS(double val)
+string __cdecl DtoS(const double &val)
 {
     stringstream s;
     s << val;
@@ -37,13 +37,13 @@ string __cdecl DtoS(double val)
 }
 
 inline
-string __cdecl LtoS(long val)
+string __cdecl LtoS(const long &val)
 {
     return to_string(val);
 }
 
 inline
-string __cdecl LDtoS(long double val)
+string __cdecl LDtoS(const long double &val)
 {
     stringstream s;
     s << val;
@@ -51,7 +51,7 @@ string __cdecl LDtoS(long double val)
 }
 
 inline
-string __cdecl BtoS(bool val)
+string __cdecl BtoS(const bool &val)
 {
     if (val)
         return string("true");

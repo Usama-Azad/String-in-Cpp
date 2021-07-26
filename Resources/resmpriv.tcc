@@ -18,7 +18,7 @@ std::string usa::string::Lower_Case(std::string str)
     return str;
 }
 
-usa::string& usa::string::replace_ch(char _old, char _new, bool first)
+usa::string& usa::string::replace_ch(const char &_old, const char &_new, bool first)
 {
     for (int i = 0; i < this->size(); i++)
     {
@@ -32,7 +32,7 @@ usa::string& usa::string::replace_ch(char _old, char _new, bool first)
     return *this;
 }
 
-usa::string& usa::string::replace_str(std::string _old, std::string _new, bool first)
+usa::string& usa::string::replace_str(const std::string &_old, const std::string &_new, bool first)
 {
     int start = 0, end = 0;
     int len = _old.size();

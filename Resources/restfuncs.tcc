@@ -4,17 +4,18 @@
 
 /// @c Author Usama Azad.
 
-vector<string> split(const string& str, const char* delimiter)
+vector<string> split(const string& str, const char &delimiter)
 {
-    vector<string> tokens;
-    string::size_type start = 0;
-    string::size_type end = 0;
-    while ((end = str.find(delimiter, start)) != string::npos)
+    vector<std::string> tokens;
+    size_t start = 0, end = 0;
+
+    while ((end = str.find(delimiter, start)) != std::string::npos)
     {
-        tokens.push_back(str.substr(start, end - start));
+        tokens.emplace_back(trim_(str.substr(start, end - start)));
         start = end + 1;
     }
-    tokens.push_back(str.substr(start));
+
+    tokens.emplace_back(trim_(str.substr(start)));
     return tokens;
 }
 
@@ -37,7 +38,7 @@ vector<string> split(const string& str, const char* delimiter)
         return s;
     }
 
-    string trim(const string& str)
+    string trim_(const string& str)
     {
         return string(ltrim(rtrim(str)));
     }
@@ -55,9 +56,9 @@ vector<string> split(const string& str, const char* delimiter)
 
 string reverse(string str)
 {
-    string copy = (str);
-    for (int i = 0, j = (str.size() - 1); i < str.size(); i++, j--)
-        str.at(j) = copy.at(i);
+    int len = str.size();
+    for (int i = 0; i < len / 2; i++)
+        str.at(i) = std::exchange(str.at(len - 1 - i), str.at(i));
     return str;
 }
 
@@ -80,47 +81,35 @@ string replace_first(string str, char prev, char next)
     return str;
 }
 
-bool is_Upper(string str)
+bool is_Upper(const string &str)
 {
-    for (int i = 0; i < str.size(); i++)
-        if (str.at(i) >= 97 && str.at(i) <= 122)
+    for (const char& ch : str)
+        if (ch & 0x20)
             return false;
     return true;
 }
 
-bool is_Lower(string str)
+bool is_Lower(const string &str)
 {
-    for (int i = 0; i < str.size(); i++)
-        if (str.at(i) >= 65 && str.at(i) <= 90)
+    for (const char& ch : str)
+        if (!(ch & 0x20))
             return false;
     return true;
 }
 
 string to_UpperCase(string str)
 {
-    for (int i = 0; i < str.size(); i++)
-    {
-        if ((int)str[i] >= 97 && (int)str[i] <= 122)
-        {
-            str[i] -= 97;
-            str[i] += 65;
-        }
-        str[i] = (char)str[i];
-    }
+    for (char & ch : str)
+        if (ch >= 0x61 && ch <= 0x7A)
+            ch -= 0x20;
     return str;
 }
 
 string to_LowerCase(string str)
 {
-    for (int i = 0; i < str.size(); i++)
-    {
-        if ((int)str[i] >= 65 && (int)str[i] <= 90)
-        {
-            str[i] -= 65;
-            str[i] += 97;
-        }
-        str[i] = (char)str[i];
-    }
+    for (char& ch : str)
+        if (ch >= 0x41 && ch <= 0x5A)
+            ch += 0x20;
     return str;
 }
 
