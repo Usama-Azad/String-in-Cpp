@@ -32,7 +32,7 @@
 
 #ifdef __cplusplus
 
-#define __version__ "1.0.0"
+#define __version__ "2.0.1"
 #define __author__ "Usama Azad"
 
 #include "usastringfunctool.h"
@@ -70,9 +70,9 @@ namespace usa
 
         __STDSTRING__ Lower_Case(__STDSTRING__ str);
 
-        __MYSTRING_REF__ replace_ch(__CHAR__ _old, __CHAR__ _new, __BOOL__ first = false);
+        __MYSTRING_REF__ replace_ch(const __CHAR__ &_old, const __CHAR__ &_new, __BOOL__ first = false);
 
-        __MYSTRING_REF__ replace_str(__STDSTRING__ _old, __STDSTRING__ _new, __BOOL__ first = false);
+        __MYSTRING_REF__ replace_str(const __STDSTRING__ &_old, const __STDSTRING__ &_new, __BOOL__ first = false);
 
     public:
 
@@ -81,31 +81,31 @@ namespace usa
          *    different data types.
         ************************************************************************/
 
-        string()                            : std::string() {}
+        string()                             : std::string() {}
 
-        string(const char *str)             : std::string(str) {}
+        string(const char *str)              : std::string(str) {}
 
-        string(const __STDSTRING__ str)     : std::string(str) {}
+        string(const __STDSTRING__ &str)     : std::string(str) {}
 
-        string(const __BOOL__ val)          : std::string(BtoS(val)) {}
+        string(const __BOOL__ &val)          : std::string(BtoS(val)) {}
 
-        string(const __CHAR__ val)          : std::string(CtoS(val)) {}
+        string(const __CHAR__ &val)          : std::string(CtoS(val)) {}
 
-        string(const __DOUBLE__ val)        : std::string(DtoS(val)) {}
+        string(const __DOUBLE__ &val)        : std::string(DtoS(val)) {}
 
-        string(const __FLOAT__ val)         : std::string(FtoS(val)) {}
+        string(const __FLOAT__ &val)         : std::string(FtoS(val)) {}
 
-        string(const __LDOUBLE__ val)       : std::string(LDtoS(val)) {}
+        string(const __LDOUBLE__ &val)       : std::string(LDtoS(val)) {}
 
-        string(const __INT__ val)           : std::string(to_string(val)) {}
+        string(const __INT__ &val)           : std::string(to_string(val)) {}
 
-        string(const __LONG__ val)          : std::string(to_string(val)) {}
+        string(const __LONG__ &val)          : std::string(to_string(val)) {}
 
         template<typename type>
-        string(const std::initializer_list<type> val)
+        string(const std::initializer_list<type> &val)
         {
             __STDSTRING__ res = "";
-            for (auto i : val)
+            for (const auto &i : val)
                 res += string(i);
             this->assign(res);
         }
@@ -171,7 +171,33 @@ namespace usa
 
         /************************************************************************/
 
-        
+
+
+        /***********************************************************************
+         * @c Some others operators.
+        ************************************************************************/
+
+        __MYSTRING_REF__ operator*(int times)
+        {
+            times = (times < 0) ? abs(times) : (times == 0) ? 1 : times;
+            const std::string s = *this;
+            for (; --times;)
+                this->append(s);
+            return *this;
+        }
+
+        template<typename T>
+        __MYSTRING_REF__ operator<<(const T& obj) {
+            return this->join(string(obj));
+        }
+
+        __MYSTRING_REF__ operator~() {
+            return this->reverse();
+        }
+
+        /************************************************************************/
+
+
 
         /***********************************************************************
          * @name is_space
@@ -180,7 +206,7 @@ namespace usa
          * @return bool : Return true if the string is a whitespace string, 
          * else false.
         ************************************************************************/
-        __BOOL__ is_space();
+        __BOOL__ is_space() const;
         /************************************************************************/
         
 
@@ -191,7 +217,7 @@ namespace usa
          * @return bool : Return true if the string is an uppercase string, 
          * else false.
         ************************************************************************/
-        __BOOL__ is_upper();
+        __BOOL__ is_upper() const;
         /************************************************************************/
         
 
@@ -202,7 +228,7 @@ namespace usa
          * @return bool : Return true if the string is a lowercase string, 
          * else false.
         ************************************************************************/
-        __BOOL__ is_lower();
+        __BOOL__ is_lower() const;
         /************************************************************************/
 
 
@@ -213,7 +239,7 @@ namespace usa
          * @return bool : Return true if the string is an alphabetic string, 
          * else false.
         ************************************************************************/
-        __BOOL__ is_alpha();
+        __BOOL__ is_alpha() const;
         /************************************************************************/
 
 
@@ -224,7 +250,7 @@ namespace usa
          * @return bool : Return true if the string is an alpha Numeric string,
          * else false.
         ************************************************************************/
-        __BOOL__ is_alnum();
+        __BOOL__ is_alnum() const;
         /************************************************************************/
 
 
@@ -235,7 +261,7 @@ namespace usa
          * @return bool : Return true if the string is a numeric string,
          * else false.
         ************************************************************************/
-        __BOOL__ is_numeric();
+        __BOOL__ is_numeric() const;
         /************************************************************************/
 
         
@@ -245,21 +271,21 @@ namespace usa
          * @return bool : Return true if any char in string is space,
          * else false.
         ************************************************************************/
-        __BOOL__ is_contain_space();
+        __BOOL__ is_contain_space() const;
         /************************************************************************/
 
 
         /***********************************************************************
          * TODO Add optional arguments start and end for slicing.
-         * @name is_contain
-         * @brief take type of chars are return true if string contain those chars,
+         * @name is_contain_any
+         * @brief take no. of chars are return true if string contains any of those chars,
          * else false.
-         * @param type: contain which type of character. (By default 'special_chars')
-         * @example usa::string("C++ is awesome!").is_contain(punctuation);
-         * @return bool : Return true if the string contains given type of characters,
+         * @param str: string of different characters.
+         * @example usa::string("C++ is awesome!").is_contain_any(punctuation);
+         * @return bool : Return true if the string contains any of those characters,
          * else false.
         ************************************************************************/
-        __BOOL__ is_contain(const char* type = special_chars);
+        __BOOL__ is_contain_any(const char* str) const;
         /************************************************************************/
 
 
@@ -283,7 +309,7 @@ namespace usa
          * @return bool : Return true if string ends with the specified suffix,
          * else false.
         ************************************************************************/
-        __BOOL__ endswith(__STDSTRING__ str, __BOOL__ match_case = true);
+        __BOOL__ endswith(const __STDSTRING__ &str, __BOOL__ match_case = true);
         /************************************************************************/
 
 
@@ -298,7 +324,7 @@ namespace usa
          * @return bool : Return true if string starts with the specified suffix,
          * else false.
         ************************************************************************/
-        __BOOL__ startswith(__STDSTRING__ str, __BOOL__ match_case = true);
+        __BOOL__ startswith(const __STDSTRING__ &str, __BOOL__ match_case = true);
         /************************************************************************/
 
 
@@ -313,7 +339,7 @@ namespace usa
          * @return int : Return the lowest index in string where substring is found,
          * Return -1 on failure.
         ************************************************************************/
-        __INT__ find_str(__STDSTRING__ str, __INT__ pos = 0, __BOOL__ match_case = true);
+        __INT__ find_str(const __STDSTRING__ &str, __INT__ pos = 0, __BOOL__ match_case = true);
         /************************************************************************/
 
 
@@ -324,7 +350,8 @@ namespace usa
          * @return int : Return the number of occurrences of character @c 'ch'
          * in string.
         ************************************************************************/
-        __INT__ count(__CHAR__ ch);
+        __INT__ count(const __CHAR__ &ch) const;
+        __INT__ countWord(string word, bool match_case = true) const;
         /************************************************************************/
 
 
@@ -362,13 +389,10 @@ namespace usa
          * @return usa::string& : Return a refrence of Concatenated string.
         ************************************************************************/
         template <size_t n>
-        __MYSTRING_REF__ join(string(&arr)[n], string delimiter = "", __BOOL__ swd = true)
+        __MYSTRING_REF__ join(string(&arr)[n], const string &delimiter = "", __BOOL__ swd = true)
         {
             for (int i = 0; i < n; i++)
-                if (swd)
-                    (*this) += delimiter + arr[i];
-                else
-                    (*this) += arr[i] + delimiter;
+                (*this) += (swd) ? delimiter + arr[i] : arr[i] + delimiter;
             return *this;
         }
         /************************************************************************/
@@ -385,13 +409,10 @@ namespace usa
          * @return usa::string& : Return a refrence of Concatenated string.
         ************************************************************************/
         template <size_t n>
-        __MYSTRING_REF__ join(__STDSTRING__(&arr)[n], string delimiter = "", __BOOL__ swd = true)
+        __MYSTRING_REF__ join(__STDSTRING__(&arr)[n], const string &delimiter = "", __BOOL__ swd = true)
         {
             for (int i = 0; i < n; i++)
-                if (swd)
-                    (*this) += delimiter + arr[i];
-                else
-                    (*this) += arr[i] + delimiter;
+                (*this) += (swd) ? delimiter + arr[i] : arr[i] + delimiter;
             return *this;
         }
         /************************************************************************/
@@ -490,7 +511,7 @@ namespace usa
          * @return usa::string& : Return a refrence string with all occurrences
          * of @c _old character replaced by @c _new character.
         ************************************************************************/
-        __MYSTRING_REF__ replace(__CHAR__ _old, __CHAR__ _new);
+        __MYSTRING_REF__ replace(const __CHAR__ &_old, const __CHAR__ &_new);
         /************************************************************************/
 
 
@@ -505,7 +526,7 @@ namespace usa
          * @return usa::string& : Return a refrence string with only first occurrences
          * of @c _old character replaced by @c _new character.
         ************************************************************************/
-        __MYSTRING_REF__ replace_first(__CHAR__ _old, __CHAR__ _new);
+        __MYSTRING_REF__ replace_first(const __CHAR__ &_old, const __CHAR__ &_new);
         /************************************************************************/
 
 
@@ -519,7 +540,7 @@ namespace usa
          * @return usa::string& : Return a refrence string with all occurrences
          * of @c _old substrings replaced by @c _new substring.
         ************************************************************************/
-        __MYSTRING_REF__ replace(__STDSTRING__ _old, __STDSTRING__ _new);
+        __MYSTRING_REF__ replace(const __STDSTRING__ &_old, const __STDSTRING__ &_new);
         /************************************************************************/
 
 
@@ -534,7 +555,7 @@ namespace usa
          * @return usa::string& : Return a refrence string with only first occurrences
          * of @c _old substring replaced by @c _new substring.
         ************************************************************************/
-        __MYSTRING_REF__ replace_first(__STDSTRING__ _old, __STDSTRING__ _new);
+        __MYSTRING_REF__ replace_first(const __STDSTRING__ &_old, const __STDSTRING__ &_new);
         /************************************************************************/
 
 
@@ -583,7 +604,7 @@ namespace usa
          * @param delimiter: By which two strings are joined. (By default "")
          * @return usa::string& : Return a refrence of Concatenated string.
         ************************************************************************/
-        __MYSTRING_REF__ join(const usa::string& obj, string delimiter = "");
+        __MYSTRING_REF__ join(const usa::string& obj, const string &delimiter = "");
         /************************************************************************/
 
 
@@ -597,7 +618,7 @@ namespace usa
          * delimeter, else start with given vactor's element (By default 'true')
          * @return usa::string& : Return a refrence of Concatenated string.
         ************************************************************************/
-        __MYSTRING_REF__ join(std::vector<__CHAR__> arr, string delimiter = "", __BOOL__ swd = true);
+        __MYSTRING_REF__ join(const std::vector<__CHAR__> &arr, const string &delimiter = "", __BOOL__ swd = true);
         /************************************************************************/
 
 
@@ -611,7 +632,7 @@ namespace usa
          * delimeter, else start with given vactor's element (By default 'true')
          * @return usa::string& : Return a refrence of Concatenated string.
         ************************************************************************/
-        __MYSTRING_REF__ join(std::vector<string> arr, string delimiter = "", __BOOL__ swd = true);
+        __MYSTRING_REF__ join(const std::vector<string> &arr, const string &delimiter = "", __BOOL__ swd = true);
         /************************************************************************/
 
 
@@ -625,7 +646,7 @@ namespace usa
          * delimeter, else start with given vactor's element (By default 'true')
          * @return usa::string& : Return a refrence of Concatenated string.
         ************************************************************************/
-        __MYSTRING_REF__ join(std::vector<__STDSTRING__> arr, string delimiter = "", __BOOL__ swd = true);
+        __MYSTRING_REF__ join(const std::vector<__STDSTRING__> &arr, const string &delimiter = "", __BOOL__ swd = true);
         /************************************************************************/
 
 
@@ -639,7 +660,7 @@ namespace usa
          * delimeter, else start with given initializer_list's element (By default 'true')
          * @return usa::string& : Return a refrence of Concatenated string.
         ************************************************************************/
-        __MYSTRING_REF__ join(std::initializer_list<string> arr, string delimiter = "", __BOOL__ swd = true);
+        __MYSTRING_REF__ join(const std::initializer_list<string> &arr, const string &delimiter = "", __BOOL__ swd = true);
         /************************************************************************/
 
 
@@ -659,12 +680,12 @@ namespace usa
         /***********************************************************************
          * @name split
          * @brief Return a vector of the words in the string, using the delimiter to split the string.
-         * The default value of delimiter (" ") means split according to any whitespace.
+         * The default value of delimiter 0x020 means split according to any whitespace.
          * 
-         * @param delimiter: By which function split the given string (By default " ").
+         * @param delimiter: By which function split the given string (By default ' ').
          * @return vector std::string : Return a vector of splited tokens of string.
         ************************************************************************/
-        vector<__STDSTRING__> split(const char* delimiter = " ");
+        vector<__STDSTRING__> split(const __CHAR__& delimiter = 0x020);
         /************************************************************************/
 
 
