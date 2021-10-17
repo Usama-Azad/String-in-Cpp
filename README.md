@@ -9,7 +9,7 @@
 
 #
 ## Download
-For Downloading `zip` file [Click Here](https://github.com/Usama-Azad/String-in-Cpp/archive/refs/tags/v2.0.1.zip) .
+For Downloading `zip` file [Click Here](https://github.com/Usama-Azad/String-in-Cpp/archive/refs/heads/master.zip) .
 
 #
 ## Documentation
