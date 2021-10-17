@@ -11,7 +11,7 @@
 
 ### *Definations:*
 ``` cpp
-#define __version__ "1.0.0"
+#define __version__ "3.0.0"
 #define __author__ "Usama Azad"
 
 
@@ -22,7 +22,6 @@
 #define operators       "+-*/^%!&|"
 #define printable       "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
 #define punctuation     "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
-#define special_chars   "#&$!%@?~^|<>(){}[]+-*\\/=_.,:;`'\""
 #define ascii_letters   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 #define ascii_lowercase "abcdefghijklmnopqrstuvwxyz"
 #define ascii_uppercase "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -36,87 +35,100 @@ string()
 
 string(const char *)
 
-string(const __STDSTRING__)
+string(const __STDSTRING__&)
 
-string(const __BOOL__)   
+string(const __BOOL__&)   
 
-string(const __CHAR__)   
+string(const __CHAR__&)   
 
-string(const __DOUBLE__) 
+string(const __DOUBLE__&) 
 
-string(const __FLOAT__)  
+string(const __FLOAT__&)  
 
-string(const __LDOUBLE__) 
+string(const __LDOUBLE__&) 
 
-string(const __INT__)         
+string(const __INT__&)         
 
-string(const __LONG__)        
+string(const __LONG__&)        
 
 template<typename type>
 string(const std::initializer_list<type>);
 
-operator int();
+operator int() const;
 
-operator long();
+operator long() const;
 
-operator bool();
+operator bool() const;
 
-operator char();
+operator char() const;
 
-operator float();
+operator float() const;
 
-operator double();
+operator double() const;
 
-operator long double();
+operator long double() const;
 
-operator std::string();
+operator std::string() const;
 
-explicit operator const char* ();
+explicit operator const char* () const;
 
-__INT__         to_int();                           
+__INT__         to_int() const;                           
     
-__LONG__        to_long();                         
+__LONG__        to_long() const;                         
 
-__BOOL__        to_bool();                         
+__BOOL__        to_bool() const;                         
 
-__CHAR__        to_char();                        
+__CHAR__        to_char() const;                        
 
-__FLOAT__       to_float();                       
+__FLOAT__       to_float() const;                       
 
-__DOUBLE__      to_double();                     
+__DOUBLE__      to_double() const;                     
 
-__LDOUBLE__     to_longdouble();            
+__LDOUBLE__     to_longDouble() const;            
 
-__STDSTRING__   to_std_string();    
+__STDSTRING__   to_stdString() const;    
 
 template<typename T>
-T convert();
+T castTo() const;
 
-__BOOL__ is_space();
+__MYSTRING__ operator*(int times) const;
+
+__MYSTRING_REF__ operator*=(int times);
+
+template<typename T>
+__MYSTRING_REF__ operator<<(const T& obj);
+
+__MYSTRING__ operator~() const;
+
+__BOOL__ isEmpty() const;
     
-__BOOL__ is_upper();
+__BOOL__ is_space() const;
 
-__BOOL__ is_lower();
+__BOOL__ is_upper() const;
 
-__BOOL__ is_alpha();
+__BOOL__ is_lower() const;
 
-__BOOL__ is_alnum();
+__BOOL__ is_alpha() const;
 
-__BOOL__ is_numeric();
+__BOOL__ is_alnum() const;
 
-__BOOL__ is_contain_space();
+__BOOL__ is_numeric() const;
 
-__BOOL__ is_contain(const char* = special_chars);
+__BOOL__ is_palindrome() const;
 
-__BOOL__ is_None() const;
+__BOOL__ is_containSpace() const;
 
-__BOOL__ endswith(__STDSTRING__, __BOOL__ = true);
+__BOOL__ is_containAny(const char *) const;
 
-__BOOL__ startswith(__STDSTRING__, __BOOL__ = true);
+__BOOL__ endswith(__STDSTRING__, __BOOL__ = true) const;
 
-__INT__ find_str(__STDSTRING__, __INT__ = 0, __BOOL__ = true);
+__BOOL__ startswith(__STDSTRING__, __BOOL__ = true) const;
 
-__INT__ count(__CHAR__);
+__INT__ findStr(__STDSTRING__, __INT__ = 0, __BOOL__ = true) const;
+
+__INT__ count(__CHAR__) const;
+
+__INT__ countWord(__STDSTRING__ word, __BOOL__ = true) const;
 
 template<typename T>
 __MYSTRING_REF__ getLine(basic_istream<__CHAR__, T>&, __CHAR__ = 0x00A, const char* = NULL);
@@ -124,62 +136,90 @@ __MYSTRING_REF__ getLine(basic_istream<__CHAR__, T>&, __CHAR__ = 0x00A, const ch
 
 #if __cplusplus >= 201102L
 
-    void strip();
+        __MYSTRING__ trim()  const;
 
-    __MYSTRING_REF__ trim();
+        __MYSTRING__ ltrim() const;
 
-    __MYSTRING_REF__ ltrim();
+        __MYSTRING__ rtrim() const;
 
-    __MYSTRING_REF__ rtrim();
+        __MYSTRING_REF__ trim_();
+
+        __MYSTRING_REF__ ltrim_();
+
+        __MYSTRING_REF__ rtrim_();
+
+        /**
+         * Deprecated in version 3.0.0.
+         * @deprecated Use trim_() instead of this.
+        **/
+        void strip();
 
 #endif
 
 
-__MYSTRING_REF__ title();
+__MYSTRING__ title() const;
 
-__MYSTRING_REF__ reverse();
+__MYSTRING_REF__ title_();
 
-__MYSTRING_REF__ swapcase();
+__MYSTRING__ reverse() const;
 
-__MYSTRING_REF__ capitalize();
+__MYSTRING_REF__ reverse_();
 
-__MYSTRING_REF__ toUpperCase();
+__MYSTRING__ swapcase() const;
 
-__MYSTRING_REF__ toLowerCase();
+__MYSTRING_REF__ swapcase_();
 
-__MYSTRING_REF__ replace(__CHAR__, __CHAR__);
+__MYSTRING__ capitalize() const;
 
-__MYSTRING_REF__ replace_first(__CHAR__, __CHAR__);
+__MYSTRING_REF__ capitalize_();
 
-__MYSTRING_REF__ replace(__STDSTRING__, __STDSTRING__);
+__MYSTRING__ toUpperCase() const;
 
-__MYSTRING_REF__ replace_first(__STDSTRING__, __STDSTRING__);
+__MYSTRING_REF__ toUpperCase_();
 
-__MYSTRING_REF__ format(const std::vector<string>&);
+__MYSTRING__ toLowerCase() const;
 
-__MYSTRING_REF__ fill(__INT__, __INT__, __CHAR__);
+__MYSTRING_REF__ toLowerCase_();
 
-__MYSTRING_REF__ zfill(__INT__, __CHAR__ = '0', __BOOL__ = true);
+__MYSTRING__ replace(const __STDSTRING__&, const __STDSTRING__&) const;
 
-__MYSTRING_REF__ slice(__INT__ = 0, __INT__ = 0, __INT__ = 0);
+__MYSTRING_REF__ replace_(const __STDSTRING__&, const __STDSTRING__&);
 
-__MYSTRING_REF__ join(const usa::string&, string = "");
+__MYSTRING__ replaceFirst(const __STDSTRING__&, const __STDSTRING__&) const;
 
-__MYSTRING_REF__ join(std::vector<__CHAR__>, string = "", __BOOL__ = true);
+__MYSTRING_REF__ replaceFirst_(const __STDSTRING__&, const __STDSTRING__&);
 
-__MYSTRING_REF__ join(std::vector<string>, string = "", __BOOL__ = true);
+__MYSTRING__ replaceBlocks(const __CHAR__* startsFrom, const __STDSTRING__& endsOn, const __CHAR__* replaceWith) const;
 
-__MYSTRING_REF__ join(std::vector<__STDSTRING__>, string = "", __BOOL__ = true);
+__MYSTRING_REF__ replaceBlocks_(const __CHAR__* startsFrom, const __STDSTRING__& endsOn, const __CHAR__* replaceWith);
 
-__MYSTRING_REF__ join(std::initializer_list<string>, string = "", __BOOL__ = true);
+template<typename ...Args>
+__MYSTRING__ format(const Args& ...) const; 
 
-template <size_t n>
-__MYSTRING_REF__ join(string(&)[n], string = "", __BOOL__ = true);
+template<typename ...Args>
+__MYSTRING_REF__ format_(const Args& ...);
 
-template <size_t n>
-__MYSTRING_REF__ join(__STDSTRING__(&)[n], string = "", __BOOL__ = true);
+__MYSTRING__ fill(__INT__, __INT__, __CHAR__) const;
 
-vector<__STDSTRING__> split(const char* = " ");
+__MYSTRING_REF__ fill_(__INT__, __INT__, __CHAR__);
+
+__MYSTRING__ zfill(__INT__, __CHAR__ = '0', __BOOL__ = true) const;
+
+__MYSTRING_REF__ zfill_(__INT__, __CHAR__ = '0', __BOOL__ = true);
+
+__MYSTRING__ slice(__INT__ = 0, __INT__ = 0, __INT__ = 0) const;
+
+__MYSTRING_REF__ slice_(__INT__ = 0, __INT__ = 0, __INT__ = 0);
+
+__MYSTRING_REF__ join(const __MYSTRING__&, const __STDSTRING__& = "");
+
+template <typename Iter>
+__MYSTRING_REF__ join(Iter begin, Iter end, const __STDSTRING__& = "", __BOOL__ = true);
+
+template <typename T, size_t n>
+__MYSTRING_REF__ join(const T(&)[n], const __STDSTRING__ & = "", __BOOL__ = true);
+
+vector<__STDSTRING__> split(const __CHAR__& = 0x020);
 
 vector<__STDSTRING__> splitlines();
       
@@ -227,16 +267,16 @@ vector<__STDSTRING__> splitlines();
 ### *convert<>()*
 ``` cpp
         /***********************************************************************
-         * @name convert
-         * @brief Take typename as template parameter T and try to convert the
+         * @name castTo
+         * @brief Take typename as template parameter T and try to cast the
          * usa::string to given type T and if conversion is not possible it throws
          * runtime error.
          * @param T: template parameter T which is typename.
-         * @return Any : ? Return converted string if possible
+         * @return Any : ? Return casted string if possible
          * else `throw runtime error`.
         ************************************************************************/
         template<typename T>
-        T convert();
+        T castTo();
         /************************************************************************/
 ```
 <br>
@@ -333,44 +373,44 @@ vector<__STDSTRING__> splitlines();
 ```
 <br>
 
-### *is_contain_space()*
+### *is_containSpace()*
 ``` cpp
         /***********************************************************************
          * TODO Add optional arguments start and end for slicing.
-         * @name is_contain_space
+         * @name is_containSpace
          * @return bool : Return true if any char in string is space,
          * else false.
         ************************************************************************/
-        __BOOL__ is_contain_space();
+        __BOOL__ is_containSpace();
         /************************************************************************/
 ```
 <br>
 
-### *is_contain_space()*
+### *is_containAny()*
 ``` cpp
         /***********************************************************************
          * TODO Add optional arguments start and end for slicing.
-         * @name is_contain
+         * @name is_containAny
          * @brief take type of chars are return true if string contain those chars,
          * else false.
          * @param type: contain which type of character.
-         * @example usa::string("C++ is awesome!").is_contain(punctuation);
+         * @example usa::string("C++ is awesome!").is_containAny(punctuation);
          * @return bool : Return true if the string contains given type of characters,
          * else false.
         ************************************************************************/
-        __BOOL__ is_contain_space(const char* type);
+        __BOOL__ is_containAny(const char* type);
         /************************************************************************/
 ```
 <br>
 
-### *is_None()*
+### *isEmpty()*
 ``` cpp
         /***********************************************************************
-         * @name is_None
+         * @name isEmpty
          * @brief A string is None if it is empty.
          * @return bool : Return true if the string is empty, else false.
         ************************************************************************/
-        __BOOL__ is_None() const;
+        __BOOL__ isEmpty() const;
         /************************************************************************/
 ```
 <br>
@@ -421,10 +461,10 @@ vector<__STDSTRING__> splitlines();
 ```
 <br>
 
-### *find_str()*
+### *findStr()*
 ``` cpp
         /***********************************************************************
-         * @name find_str
+         * @name findStr
          * @param str: substring which is to be compared.
          * @param pos: position from where start comparasion.
          * @param match_case: (By default 'true') if true then compared cases
@@ -434,7 +474,7 @@ vector<__STDSTRING__> splitlines();
          * @return int : Return the lowest index in string where substring is found,
          * Return -1 on failure.
         ************************************************************************/
-        __INT__ find_str(__STDSTRING__ str, __INT__ pos = 0, __BOOL__ match_case = true);
+        __INT__ findStr(__STDSTRING__ str, __INT__ pos = 0, __BOOL__ match_case = true);
         /************************************************************************/
 ```
 <br>
@@ -453,11 +493,24 @@ vector<__STDSTRING__> splitlines();
 ```
 <br>
 
-### *startswith, endswith, find_str & count Example:*
+### *countWord()*
+``` cpp
+        /***********************************************************************
+         * TODO Add optional arguments start and end for slicing.
+         * @name countWord
+         * @param word: word which counted from the given string.
+         * @return int : Return the number of occurrences of @c word in string.
+        ************************************************************************/
+        __INT__ countWord(const __MYSTRING__&, __BOOL__ = true) const;
+        /************************************************************************/
+```
+<br>
+
+### *startswith, endswith, findStr & count Example:*
 
 <br>
 
-![startswith, endswith, find_str & count Example](Images/BasicFuncs.png)
+![startswith, endswith, findStr & count Example](Images/BasicFuncs.png)
 
 <br>
 
@@ -492,8 +545,8 @@ vector<__STDSTRING__> splitlines();
 ``` cpp
         /***********************************************************************
          * @name join
-         * @overload +6
-         * @brief Concatenate array of string with orignal string with delimeter.
+         * @overload +3
+         * @brief Concatenate sequence of string with orignal string with delimeter.
          * @param Any: ? Overloaded.
          * @param delimiter: By which two strings are joined. (By default "")
          * @param swd: start with delimeter if it is true concatination starts with
@@ -501,21 +554,13 @@ vector<__STDSTRING__> splitlines();
          * @return usa::string& : Return a refrence of Concatenated string.
         ************************************************************************/
 
-        __MYSTRING_REF__ join(const usa::string& obj, string delimiter = "");
+        __MYSTRING_REF__ join(const __MYSTRING__&, const __STDSTRING__& = "");
 
-        __MYSTRING_REF__ join(std::vector<__CHAR__> arr, string delimiter = "", __BOOL__ swd = true);
+        template <typename Iter>
+        __MYSTRING_REF__ join(Iter begin, Iter end, const __STDSTRING__& = "", __BOOL__ = true);
 
-        __MYSTRING_REF__ join(std::vector<string> arr, string delimiter = "", __BOOL__ swd = true);
-
-        __MYSTRING_REF__ join(std::vector<__STDSTRING__> arr, string delimiter = "", __BOOL__ swd = true);
-
-        __MYSTRING_REF__ join(std::initializer_list<string> arr, string delimiter = "", __BOOL__ swd = true);
-
-        template <size_t n>
-        __MYSTRING_REF__ join(string(&arr)[n], string delimiter = "", __BOOL__ swd = true);
-
-        template <size_t n>
-        __MYSTRING_REF__ join(__STDSTRING__(&arr)[n], string delimiter = "", __BOOL__ swd = true)
+        template <typename T, size_t n>
+        __MYSTRING_REF__ join(const T(&)[n], const __STDSTRING__ & = "", __BOOL__ = true);
 
         /************************************************************************/
 ```
@@ -547,13 +592,23 @@ vector<__STDSTRING__> splitlines();
          * @strip: it works like trim() but it does not return any thing.
         ************************************************************************/
 
+        __MYSTRING__ trim()  const;
+
+        __MYSTRING__ ltrim() const;
+
+        __MYSTRING__ rtrim() const;
+
+        __MYSTRING_REF__ trim_();
+
+        __MYSTRING_REF__ ltrim_();
+
+        __MYSTRING_REF__ rtrim_();
+
+        /**
+         * Deprecated in version 3.0.0.
+         * @deprecated Use trim_() instead of this.
+        **/
         void strip();
-        
-        __MYSTRING_REF__ trim();
-
-        __MYSTRING_REF__ ltrim();
-
-        __MYSTRING_REF__ rtrim();
 
         /************************************************************************/
 
@@ -661,10 +716,10 @@ vector<__STDSTRING__> splitlines();
 ```
 <br>
 
-### *replace_first()*
+### *replaceFirst()*
 ``` cpp
         /***********************************************************************
-         * @name replace_first
+         * @name replaceFirst
          * @overload +1
          * @brief replace only first occurrences of @c _old characters in given
          * string with @c _new char.
@@ -674,7 +729,7 @@ vector<__STDSTRING__> splitlines();
          * @return usa::string& : Return a refrence string with only first occurrences
          * of @c _old character replaced by @c _new character.
         ************************************************************************/
-        __MYSTRING_REF__ replace_first(__CHAR__ _old, __CHAR__ _new);
+        __MYSTRING_REF__ replaceFirst(__CHAR__ _old, __CHAR__ _new);
         /************************************************************************/
 ```
 <br>
@@ -699,7 +754,7 @@ vector<__STDSTRING__> splitlines();
 ### *replace_first()*
 ``` cpp
         /***********************************************************************
-         * @name replace_first
+         * @name replaceFirst
          * @overload +1
          * @brief replace only first occurrences of @c _old substring in given
          * string with @c _new substring.
@@ -709,16 +764,16 @@ vector<__STDSTRING__> splitlines();
          * @return usa::string& : Return a refrence string with only first occurrences
          * of @c _old substring replaced by @c _new substring.
         ************************************************************************/
-        __MYSTRING_REF__ replace_first(__STDSTRING__ _old, __STDSTRING__ _new);
+        __MYSTRING_REF__ replaceFirst(__STDSTRING__ _old, __STDSTRING__ _new);
         /************************************************************************/
 ```
 <br>
 
-### *replace & replace_first Example:*
+### *replace & replaceFirst Example:*
 
 <br>
 
-![replace & replace_first Example](Images/Replace.png)
+![replace & replaceFirst Example](Images/Replace.png)
 
 <br>
 
@@ -726,12 +781,18 @@ vector<__STDSTRING__> splitlines();
 ``` cpp
         /***********************************************************************
          * @name format
-         * @brief Formatted string, using substitutions from std::vector of string.
+         * @brief Formatted string, using substitutions from args.
          * The substitutions are identified by braces ('{' and '}').
-         * @param arr: const vector<string>& of different args.
-         * @return usa::string& : Return a formatted version of string.
+         * After version 3.0.0 now support index substitutions (like "Hello {2} & {1}").
+         * @tparam ...Args: Any type of args.
+         * @param args: Different type of args.
+         * @return usa::string | usa::string& : Return a formatted version of string.
         ************************************************************************/
-        __MYSTRING_REF__ format(const std::vector<string>& arr);
+        template<typename ...Args>
+        __MYSTRING__ format(const Args& ...) const; 
+
+        template<typename ...Args>
+        __MYSTRING_REF__ format_(const Args& ...);
         /************************************************************************/
 ```
 <br>

@@ -1,28 +1,41 @@
 ///                           -*- @c C/C++ headers -*-
 
-///                        -*- @c #include"usastring.h" -*-
-
+///                       -*- @c #include"usastring.h" -*-
 
 
 /**
- * @author Usama Azad @c <https://github.com/Usama-Azad>
+ * @author Usama Azad @c https://github.com/Usama-Azad
  * 
- * @dependencies: [ "usastringfunctool.h" ]
+ * @file @c https://github.com/Usama-Azad/String-in-Cpp
  * 
- * This @c header is distributed in the hope that it will be useful,
- * but @a WITHOUT_ANY_WARRANTY; without even the implied @c warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * @dependencies: @c usastringfunctool.h
 **/
 
 
 /**
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
- * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * 
+ * MIT License
+ *
+ * Copyright (c) 2020 usastring, Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- * DEALINGS IN THE SOFTWARE.
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ * 
 **/
 
 
@@ -32,7 +45,7 @@
 
 #ifdef __cplusplus
 
-#define __version__ "2.0.1"
+#define __version__ "3.0.0"
 #define __author__ "Usama Azad"
 
 #include "usastringfunctool.h"
@@ -43,18 +56,17 @@
 #define octdigits       "01234567"
 #define hexdigits       "0123456789abcdefABCDEF"
 #define operators       "+-*/^%!&|"
-#define printable       "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
 #define punctuation     "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
-#define special_chars   "#&$!%@?~^|<>(){}[]+-*\\/=_.,:;`'\""
 #define ascii_letters   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 #define ascii_lowercase "abcdefghijklmnopqrstuvwxyz"
 #define ascii_uppercase "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+#define printable       "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
 
 
-
+/// package name usa
 namespace usa
 {
-
+    /// string class under package usa => ~90 methods
     class string final : public std::string
     {
 
@@ -65,14 +77,15 @@ namespace usa
         typedef              float                 __FLOAT__;
         typedef              double                __DOUBLE__;
         typedef              long double           __LDOUBLE__;
+        typedef              usa::string           __MYSTRING__;
         typedef              std::string           __STDSTRING__;
         typedef              usa::string&          __MYSTRING_REF__;
 
-        __STDSTRING__ Lower_Case(__STDSTRING__ str);
+        __STDSTRING__ Lower_Case(__STDSTRING__ str) const;
 
         __MYSTRING_REF__ replace_ch(const __CHAR__ &_old, const __CHAR__ &_new, __BOOL__ first = false);
 
-        __MYSTRING_REF__ replace_str(const __STDSTRING__ &_old, const __STDSTRING__ &_new, __BOOL__ first = false);
+        __MYSTRING_REF__ replace_str(const __STDSTRING__& _old, const __STDSTRING__& _new, __BOOL__ first = false);
 
     public:
 
@@ -105,7 +118,7 @@ namespace usa
         string(const std::initializer_list<type> &val)
         {
             __STDSTRING__ res = "";
-            for (const auto &i : val)
+            for (const type &i : val)
                 res += string(i);
             this->assign(res);
         }
@@ -115,57 +128,53 @@ namespace usa
 
 
         /***********************************************************************
-         * @c different operators and other function for converting string into
+         * @c different operators and other function for converting string to
          *    different data types.
         ************************************************************************/
-        operator int();
+        operator int() const;
 
-        operator long();
+        operator long() const;
 
-        operator bool();
+        operator bool() const;
 
-        operator char();
+        operator char() const;
 
-        operator float();
+        operator float() const;
 
-        operator double();
+        operator double() const;
 
-        operator long double();
+        operator long double() const;
 
-        operator std::string();
+        operator std::string() const;
 
-        explicit operator const char* ();
+        explicit operator const char *() const;
 
-        __INT__         to_int();                           
+        __INT__         to_int() const;
           
-        __LONG__        to_long();                         
+        __LONG__        to_long() const;
 
-        __BOOL__        to_bool();                         
+        __BOOL__        to_bool() const;
         
-        __CHAR__        to_char();                        
+        __CHAR__        to_char() const;
 
-        __FLOAT__       to_float();                       
+        __FLOAT__       to_float() const;
         
-        __DOUBLE__      to_double();                     
+        __DOUBLE__      to_double() const;
 
-        __LDOUBLE__     to_longdouble();            
+        __LDOUBLE__     to_longDouble() const;
         
-        __STDSTRING__   to_std_string();    
+        __STDSTRING__   to_stdString() const;
 
         template<typename T>
-        T convert()
-        {
+        T castTo() const {
             T var;
             stringstream s;
-            try
-            {
+            try {
                 s << (*this);
                 s >> var;
                 return var;
-            }
-            catch (...)
-            {
-                throw std::runtime_error("error: conversion is not possible.");
+            } catch (...) {
+                throw std::runtime_error("error: Type casting is not possible.");
             }
         }
 
@@ -177,12 +186,21 @@ namespace usa
          * @c Some others operators.
         ************************************************************************/
 
-        __MYSTRING_REF__ operator*(int times)
+        __MYSTRING__ operator*(int times) const
         {
+            __MYSTRING__ res = *this;
             times = (times < 0) ? abs(times) : (times == 0) ? 1 : times;
-            const std::string s = *this;
             for (; --times;)
-                this->append(s);
+                res.append(*this);
+            return res;
+        }
+
+        __MYSTRING_REF__ operator*=(int times)
+        {
+            const __MYSTRING_REF__ res = *this;
+            times = (times < 0) ? abs(times) : (times == 0) ? 1 : times;
+            for (; --times;)
+                this->append(res);
             return *this;
         }
 
@@ -191,7 +209,7 @@ namespace usa
             return this->join(string(obj));
         }
 
-        __MYSTRING_REF__ operator~() {
+        __MYSTRING__ operator~() const {
             return this->reverse();
         }
 
@@ -267,34 +285,43 @@ namespace usa
         
         /***********************************************************************
          * TODO Add optional arguments start and end for slicing.
-         * @name is_contain_space
+         * @name is_containSpace
          * @return bool : Return true if any char in string is space,
          * else false.
         ************************************************************************/
-        __BOOL__ is_contain_space() const;
+        __BOOL__ is_containSpace() const;
         /************************************************************************/
 
 
         /***********************************************************************
          * TODO Add optional arguments start and end for slicing.
-         * @name is_contain_any
+         * @name is_containAny
          * @brief take no. of chars are return true if string contains any of those chars,
          * else false.
          * @param str: string of different characters.
-         * @example usa::string("C++ is awesome!").is_contain_any(punctuation);
+         * @example usa::string("C++ is awesome!").is_containAny(punctuation);
          * @return bool : Return true if the string contains any of those characters,
          * else false.
         ************************************************************************/
-        __BOOL__ is_contain_any(const char* str) const;
+        __BOOL__ is_containAny(const char* str) const;
         /************************************************************************/
 
 
         /***********************************************************************
-         * @name is_None
-         * @brief A string is None if it is empty.
+         * @name is_palindrome
+         * @brief A string is palindrome if it reads the same backward as forward.
+         * @return bool : Return true if the string is palindrome, else false.
+        ************************************************************************/
+        __BOOL__ is_palindrome() const { return (*this) == this->reverse(); }
+        /************************************************************************/
+
+
+        /***********************************************************************
+         * @name isEmpty
+         * @brief A string is empty if it is "".
          * @return bool : Return true if the string is empty, else false.
         ************************************************************************/
-        __BOOL__ is_None() const { return (*this) == ""; }
+        __BOOL__ isEmpty() const { return (*this) == ""; }
         /************************************************************************/
 
 
@@ -309,7 +336,7 @@ namespace usa
          * @return bool : Return true if string ends with the specified suffix,
          * else false.
         ************************************************************************/
-        __BOOL__ endswith(const __STDSTRING__ &str, __BOOL__ match_case = true);
+        __BOOL__ endswith(const __STDSTRING__ &str, __BOOL__ match_case = true) const;
         /************************************************************************/
 
 
@@ -324,12 +351,12 @@ namespace usa
          * @return bool : Return true if string starts with the specified suffix,
          * else false.
         ************************************************************************/
-        __BOOL__ startswith(const __STDSTRING__ &str, __BOOL__ match_case = true);
+        __BOOL__ startswith(const __STDSTRING__ &str, __BOOL__ match_case = true) const;
         /************************************************************************/
 
 
         /***********************************************************************
-         * @name find_str
+         * @name findStr
          * @param str: substring which is to be compared.
          * @param pos: position from where start comparasion.
          * @param match_case: (By default 'true') if true then compared cases
@@ -339,19 +366,20 @@ namespace usa
          * @return int : Return the lowest index in string where substring is found,
          * Return -1 on failure.
         ************************************************************************/
-        __INT__ find_str(const __STDSTRING__ &str, __INT__ pos = 0, __BOOL__ match_case = true);
+        __INT__ findStr(const __STDSTRING__ &str, __INT__ pos = 0, __BOOL__ match_case = true) const;
         /************************************************************************/
 
 
         /***********************************************************************
          * TODO Add optional arguments start and end for slicing.
          * @name count
+         * @name countWord
          * @param ch: character which occurrences count from the given string.
          * @return int : Return the number of occurrences of character @c 'ch'
          * in string.
         ************************************************************************/
         __INT__ count(const __CHAR__ &ch) const;
-        __INT__ countWord(string word, bool match_case = true) const;
+        __INT__ countWord(__MYSTRING__ word, bool match_case = true) const;
         /************************************************************************/
 
 
@@ -359,19 +387,35 @@ namespace usa
          * @name getLine
          * @brief String extraction, Read value from given stream and 
          * stores it into string.
-         * @param in: A character array in which to store the data.
-         * @param delim: A "stop" character. (By default 'newline')
-         * @param msgtobeprint: if given then it printed on console before
+         * @param in: Input stream from where function reads the buffer 
+         * (like 'cin' for read buffer from console).
+         * @param delim: Character marking end of line. (By default '\n')
+         * @param msgToBeDisplay: if given then it printed on console before
          * taking input from console.
          * @return usa::string& : Return a refrence of input string.
         ************************************************************************/
         template<typename T>
-        __MYSTRING_REF__ getLine(basic_istream<__CHAR__, T>& in, __CHAR__ delim = 0x00A, const char* msgtobeprint = NULL)
+        __MYSTRING_REF__ getLine(basic_istream<__CHAR__, T>& in, __CHAR__ delim = 0x00A, const char* msgToBeDisplay = NULL)
         {
-            if (msgtobeprint != NULL)
-                std::cout << msgtobeprint;
-            fflush(stdin);
-            getline(in, *this, delim);
+            if (msgToBeDisplay != NULL)
+                printf(msgToBeDisplay);
+            fflush(stdin); // Flush the input stream Buffer.
+            getline(in, *this, delim); // Reading buffer from Stream.
+            return *this;
+        }
+        /************************************************************************/
+
+
+        /***********************************************************************
+         * @name join
+         * @overload +2
+         * @brief Concatenate given string object with orignal string with delimeter.
+         * @param obj: An other string object.
+         * @param delimiter: By which two strings are joined. (By default "")
+         * @return usa::string& : Return a refrence of Concatenated string.
+        ************************************************************************/
+        __MYSTRING_REF__ join(const __MYSTRING__& obj, const std::string& delimiter = "") {
+            (*this) += (delimiter + obj);
             return *this;
         }
         /************************************************************************/
@@ -380,19 +424,21 @@ namespace usa
 
         /***********************************************************************
          * @name join
-         * @overload +6
-         * @brief Concatenate array of string with orignal string with delimeter.
-         * @param arr: Array of string.
+         * @overload +2
+         * @brief Concatenate Array of <T> with orignal string with delimeter.
+         * @tparam T: Type of Array.
+         * @tparam n: Size of Array.
+         * @param arr: Array of 'type' <T> with 'size' <n>
          * @param delimiter: By which two strings are joined. (By default "")
          * @param swd: start with delimeter if it is true concatination starts with
-         * delimeter, else start with given array's element (By default 'true')
+         * delimeter, else start with first element of array (By default 'true')
          * @return usa::string& : Return a refrence of Concatenated string.
         ************************************************************************/
-        template <size_t n>
-        __MYSTRING_REF__ join(string(&arr)[n], const string &delimiter = "", __BOOL__ swd = true)
+        template <typename T, size_t n>
+        __MYSTRING_REF__ join(const T(&arr)[n], const std::string &delimiter = "", __BOOL__ swd = true)
         {
             for (int i = 0; i < n; i++)
-                (*this) += (swd) ? delimiter + arr[i] : arr[i] + delimiter;
+                (*this) += (swd) ? delimiter + string(arr[i]) : string(arr[i]) + delimiter;
             return *this;
         }
         /************************************************************************/
@@ -400,19 +446,18 @@ namespace usa
 
         /***********************************************************************
          * @name join
-         * @overload +6
-         * @brief Concatenate array of std::string with orignal string with delimeter.
-         * @param arr: Array of std::string.
+         * @overload +2
+         * @brief Concatenate Sequence with orignal string with delimeter.
+         * @tparam Iter: Type of Iterator.
          * @param delimiter: By which two strings are joined. (By default "")
          * @param swd: start with delimeter if it is true concatination starts with
-         * delimeter, else start with given array's element (By default 'true')
+         * delimeter, else start with first element of iterator (By default 'true')
          * @return usa::string& : Return a refrence of Concatenated string.
         ************************************************************************/
-        template <size_t n>
-        __MYSTRING_REF__ join(__STDSTRING__(&arr)[n], const string &delimiter = "", __BOOL__ swd = true)
-        {
-            for (int i = 0; i < n; i++)
-                (*this) += (swd) ? delimiter + arr[i] : arr[i] + delimiter;
+        template <typename Iter>
+        __MYSTRING_REF__ join(Iter first, Iter last, const std::string& delimiter = "", __BOOL__ swd = true) {
+            for (; first != last; first++)
+                *this += swd ? delimiter + string(*first) : string(*first) + delimiter;
             return *this;
         }
         /************************************************************************/
@@ -423,22 +468,36 @@ namespace usa
 
         /***********************************************************************
          * TODO If chars is given, remove characters from string instead.
-         * @name trim, ltrim, rtrim, strip
-         * @return usa::string& : Return a refrence of the string with leading
+         * @name trim, ltrim, rtrim
+         * @return usa::string : Return a new string with leading
+         * and trailing whitespace remove.         
+         * 
+         * @name trim_, ltrim_, rtrim_, @deprecated strip
+         * @return usa::string& : Return a refrence to the string with leading
          * and trailing whitespace remove.
          *
          * @ltrim: it only trims only left spaces.
          * @rtrim: it only trims only right spaces.
          * @trim: it trims spaces from both sides.
-         * @strip: it works like trim() but it does not return any thing.
+         * @strip: it works like @b trim() but it does not return any thing.
         ************************************************************************/
+        __MYSTRING__ trim()  const;
+
+        __MYSTRING__ ltrim() const;
+
+        __MYSTRING__ rtrim() const;
+
+        __MYSTRING_REF__ trim_();
+
+        __MYSTRING_REF__ ltrim_();
+
+        __MYSTRING_REF__ rtrim_();
+
+        /**
+         * Deprecated in version 3.0.0.
+         * @deprecated Use trim_() instead of this.
+        **/
         void strip();
-        
-        __MYSTRING_REF__ trim();
-
-        __MYSTRING_REF__ ltrim();
-
-        __MYSTRING_REF__ rtrim();
 
         /************************************************************************/
 
@@ -447,21 +506,22 @@ namespace usa
 
         /***********************************************************************
          * @name title
-         * @return usa::string& : Return a refrence of the string where each
-         * word is titlecased.
-
+         * @return usa::string | usa::string& : Return a string where each word is titlecased.
+         *
          * @brief words start with uppercased characters and all remaining cased
          * characters have lower case.
         ************************************************************************/
-        __MYSTRING_REF__ title();
+        __MYSTRING__ title() const;
+        __MYSTRING_REF__ title_();
         /************************************************************************/
 
 
         /***********************************************************************
          * @name reverse
-         * @return usa::string& : Return a refrence of the reversed string.
+         * @return usa::string | usa::string& : Return a reversed string.
         ************************************************************************/
-        __MYSTRING_REF__ reverse();
+        __MYSTRING__ reverse() const;
+        __MYSTRING_REF__ reverse_();
         /************************************************************************/
 
 
@@ -469,104 +529,100 @@ namespace usa
          * @name swapcase
          * @brief Convert uppercase characters to lowercase and lowercase 
          * characters to uppercase.
-         * @return usa::string& : Return a refrence of the swapcased string.
+         * @return usa::string | usa::string& : Return a swapcased string.
         ************************************************************************/
-        __MYSTRING_REF__ swapcase();
+        __MYSTRING__ swapcase() const;
+        __MYSTRING_REF__ swapcase_();
         /************************************************************************/
 
 
         /***********************************************************************
          * @name capitalize
          * @brief make the first character upper case and the rest lower case.
-         * @return usa::string& : Return a refrence of the capitalized string.
+         * @return usa::string | usa::string& : Return a capitalized string.
         ************************************************************************/
-        __MYSTRING_REF__ capitalize();
+        __MYSTRING__ capitalize() const;
+        __MYSTRING_REF__ capitalize_();
         /************************************************************************/
 
 
         /***********************************************************************
          * @name toUpperCase
          * @brief all character in given string are converted into upper case.
-         * @return usa::string& : Return a refrence of the UpperCased string.
+         * @return usa::string | usa::string& : Return a UpperCased string.
         ************************************************************************/
-        __MYSTRING_REF__ toUpperCase();
+        __MYSTRING__ toUpperCase() const;
+        __MYSTRING_REF__ toUpperCase_();
         /************************************************************************/
 
 
         /***********************************************************************
          * @name toLowerCase
          * @brief all character in given string are converted into lower case.
-         * @return usa::string& : Return a refrence of the LowerCased string.
+         * @return usa::string | usa::string& : Return a LowerCased string.
         ************************************************************************/
-        __MYSTRING_REF__ toLowerCase();
+        __MYSTRING__ toLowerCase() const;
+        __MYSTRING_REF__ toLowerCase_();
+        /************************************************************************/
+
+
+        /***********************************************************************
+         * @name replaceBlocks
+         * @brief replace all matching blocks in the string.
+         * @param startsFrom: Starting point of the block.
+         * @param endsOn: Ending point of the block.
+         * @param replaceWith: String which is replaced by all blocks.
+         * @return usa::string | usa::string& : Return a string with all matching blocks
+         * are replaced by @p replaceWith.
+        ************************************************************************/
+        __MYSTRING__ replaceBlocks(const __CHAR__* startsFrom, const __STDSTRING__& endsOn, const __CHAR__* replaceWith) const;
+        __MYSTRING_REF__ replaceBlocks_(const __CHAR__* startsFrom, const __STDSTRING__& endsOn, const __CHAR__* replaceWith);
         /************************************************************************/
 
 
         /***********************************************************************
          * @name replace
-         * @overload +1
-         * @brief replace all @c _old characters in given string with @c _new char.
-         * @param _old: char which is already present in the string.
-         * @param _new: new char which is replace with all @c _old chars in the string.
-         * @return usa::string& : Return a refrence string with all occurrences
-         * of @c _old character replaced by @c _new character.
-        ************************************************************************/
-        __MYSTRING_REF__ replace(const __CHAR__ &_old, const __CHAR__ &_new);
-        /************************************************************************/
-
-
-        /***********************************************************************
-         * @name replace_first
-         * @overload +1
-         * @brief replace only first occurrences of @c _old characters in given
-         * string with @c _new char.
-         * @param _old: char which is already present in the string.
-         * @param _new: new char which is replace with only first occurrences of
-         * @c _old chars in the string.
-         * @return usa::string& : Return a refrence string with only first occurrences
-         * of @c _old character replaced by @c _new character.
-        ************************************************************************/
-        __MYSTRING_REF__ replace_first(const __CHAR__ &_old, const __CHAR__ &_new);
-        /************************************************************************/
-
-
-        /***********************************************************************
-         * @name replace
-         * @overload +1
          * @brief replace all @c _old substrings in given string with @c _new substring.
          * @param _old: substring which is already present in the string.
          * @param _new: new substring which is replace with all @c _old substrings
          * in the string.
-         * @return usa::string& : Return a refrence string with all occurrences
-         * of @c _old substrings replaced by @c _new substring.
+         * @return usa::string | usa::string& : Return a refrence string with all
+         * occurrences of @c _old substrings replaced by @c _new substring.
         ************************************************************************/
-        __MYSTRING_REF__ replace(const __STDSTRING__ &_old, const __STDSTRING__ &_new);
+        __MYSTRING__ replace(const __STDSTRING__ &_old, const __STDSTRING__ &_new) const;
+        __MYSTRING_REF__ replace_(const __STDSTRING__ &_old, const __STDSTRING__ &_new);
         /************************************************************************/
 
 
         /***********************************************************************
-         * @name replace_first
-         * @overload +1
+         * @name replaceFirst
          * @brief replace only first occurrences of @c _old substring in given
          * string with @c _new substring.
          * @param _old: substring which is already present in the string.
          * @param _new: new substring which is replace with only first occurrences of
          * @c _old substring in the string.
-         * @return usa::string& : Return a refrence string with only first occurrences
-         * of @c _old substring replaced by @c _new substring.
+         * @return usa::string | usa::string& : Return a string with only first 
+         * occurrences of @c _old substring replaced by @c _new substring.
         ************************************************************************/
-        __MYSTRING_REF__ replace_first(const __STDSTRING__ &_old, const __STDSTRING__ &_new);
+        __MYSTRING__ replaceFirst(const __STDSTRING__ &_old, const __STDSTRING__ &_new) const;
+        __MYSTRING_REF__ replaceFirst_(const __STDSTRING__ &_old, const __STDSTRING__ &_new);
         /************************************************************************/
 
 
         /***********************************************************************
          * @name format
-         * @brief Formatted string, using substitutions from std::vector of string.
+         * @brief Formatted string, using substitutions from args.
          * The substitutions are identified by braces ('{' and '}').
-         * @param arr: const vector<string>& of different args.
-         * @return usa::string& : Return a formatted version of string.
+         * After version 3.0.0 now support index substitutions (like "Hello {2} & {1}").
+         * @tparam ...Args: Any type of args.
+         * @param args: Different type of args.
+         * @return usa::string | usa::string& : Return a formatted version of string.
         ************************************************************************/
-        __MYSTRING_REF__ format(const std::vector<string>& arr);
+        template<typename ...Args>
+        __MYSTRING__ format(const Args& ...) const; 
+
+        template<typename ...Args>
+        __MYSTRING_REF__ format_(const Args& ...);
         /************************************************************************/
 
 
@@ -575,10 +631,11 @@ namespace usa
          * @brief fill given @c fillChar in string from @c _start to @c _end.
          * @param _start: position from where start filling.
          * @param _end: position where filling ends.
-         * @return usa::string& : Return a refrence of fill string with @c fillChar
-         * from @c _start to @c _end.
+         * @return usa::string | usa::string& : Return a fill string with 
+         * @c fillChar from @c _start to @c _end.
         ************************************************************************/
-        __MYSTRING_REF__ fill(__INT__ _start, __INT__ _end, __CHAR__ fillChar);
+        __MYSTRING__ fill(__INT__ _start, __INT__ _end, __CHAR__ fillChar) const;
+        __MYSTRING_REF__ fill_(__INT__ _start, __INT__ _end, __CHAR__ fillChar);
         /************************************************************************/
 
 
@@ -590,90 +647,24 @@ namespace usa
          * @param fillChar: character which is filled during padding. (By default '0')
          * @param fillFromStart: if true so start padding from start or left side of 
          * the string, else start padding from end or right side of the string. (By default 'true')
-         * @return usa::string& : Return a refrence of padded string.
+         * @return usa::string | usa::string& : Return a padded string.
         ************************************************************************/
-        __MYSTRING_REF__ zfill(__INT__ width, __CHAR__ fillChar = '0', __BOOL__ fillFromStart = true);
-        /************************************************************************/
-
-
-        /***********************************************************************
-         * @name join
-         * @overload +6
-         * @brief Concatenate given string object with orignal string with delimeter.
-         * @param obj: An other string object.
-         * @param delimiter: By which two strings are joined. (By default "")
-         * @return usa::string& : Return a refrence of Concatenated string.
-        ************************************************************************/
-        __MYSTRING_REF__ join(const usa::string& obj, const string &delimiter = "");
-        /************************************************************************/
-
-
-        /***********************************************************************
-         * @name join
-         * @overload +6
-         * @brief Concatenate vector of characters with orignal string with delimeter.
-         * @param arr: Vector of characters.
-         * @param delimiter: By which two strings are joined. (By default "")
-         * @param swd: start with delimeter if it is true concatination starts with
-         * delimeter, else start with given vactor's element (By default 'true')
-         * @return usa::string& : Return a refrence of Concatenated string.
-        ************************************************************************/
-        __MYSTRING_REF__ join(const std::vector<__CHAR__> &arr, const string &delimiter = "", __BOOL__ swd = true);
-        /************************************************************************/
-
-
-        /***********************************************************************
-         * @name join
-         * @overload +6
-         * @brief Concatenate vector of string with orignal string with delimeter.
-         * @param arr: Vector of string.
-         * @param delimiter: By which two strings are joined. (By default "")
-         * @param swd: start with delimeter if it is true concatination starts with
-         * delimeter, else start with given vactor's element (By default 'true')
-         * @return usa::string& : Return a refrence of Concatenated string.
-        ************************************************************************/
-        __MYSTRING_REF__ join(const std::vector<string> &arr, const string &delimiter = "", __BOOL__ swd = true);
-        /************************************************************************/
-
-
-        /***********************************************************************
-         * @name join
-         * @overload +6
-         * @brief Concatenate vector of std::string with orignal string with delimeter.
-         * @param arr: Vector of std::string.
-         * @param delimiter: By which two strings are joined. (By default "")
-         * @param swd: start with delimeter if it is true concatination starts with
-         * delimeter, else start with given vactor's element (By default 'true')
-         * @return usa::string& : Return a refrence of Concatenated string.
-        ************************************************************************/
-        __MYSTRING_REF__ join(const std::vector<__STDSTRING__> &arr, const string &delimiter = "", __BOOL__ swd = true);
-        /************************************************************************/
-
-
-        /***********************************************************************
-         * @name join
-         * @overload +6
-         * @brief Concatenate initializer list of string with orignal string with delimeter.
-         * @param arr: Initializer list of string.
-         * @param delimiter: By which two strings are joined. (By default "")
-         * @param swd: start with delimeter if it is true concatination starts with
-         * delimeter, else start with given initializer_list's element (By default 'true')
-         * @return usa::string& : Return a refrence of Concatenated string.
-        ************************************************************************/
-        __MYSTRING_REF__ join(const std::initializer_list<string> &arr, const string &delimiter = "", __BOOL__ swd = true);
+        __MYSTRING__ zfill(__INT__ width, __CHAR__ fillChar = 0x30, __BOOL__ fillFromStart = true) const;
+        __MYSTRING_REF__ zfill_(__INT__ width, __CHAR__ fillChar = 0x30, __BOOL__ fillFromStart = true);
         /************************************************************************/
 
 
         /***********************************************************************
          * @name slice
-         * @brief Advance extended String slicing. Approximately equal to String slicing in python.
+         * @brief Advance extended String slicing.
          * 
          * @param _start: from where start the slicing of string (It might be negative).
          * @param _end: from where slicing ends (It might be negative).
          * @param _step: how many characters skiped during slicing (It might be negative).
-         * @return usa::string& : Return a refrence of sliced string.
+         * @return usa::string | usa::string& : Return a sliced string.
         ************************************************************************/
-        __MYSTRING_REF__ slice(__INT__ _start = 0, __INT__ _end = 0, __INT__ _step = 0);
+        __MYSTRING__ slice(__INT__ _start = 0, __INT__ _end = 0, __INT__ _step = 0) const;
+        __MYSTRING_REF__ slice_(__INT__ _start = 0, __INT__ _end = 0, __INT__ _step = 0);
         /************************************************************************/
 
 
@@ -691,7 +682,7 @@ namespace usa
 
         /***********************************************************************
          * @name splitlines
-         * @brief use the split function with (delimiter = "\\n") so it splits the
+         * @brief use the split function with (delimiter = "\n") so it splits the
          * string with every newline character.
          * 
          * @return vector std::string : Return a vector of splited tokens of string.
@@ -718,8 +709,7 @@ namespace usa
          * @return usa::string || std::string : if  you have C++14 or above it
          * Return <usa::string> otherwise Return <std::string>
         ************************************************************************/
-        usa::string operator""x(const char* str, size_t size)
-        {
+        usa::string operator""x(const char* str, size_t size) {
             return usa::string(str);
         }
 
@@ -732,8 +722,7 @@ namespace usa
          * @return usa::string || std::string : if  you have C++14 or above it
          * Return <usa::string> otherwise Return <std::string>
         ************************************************************************/
-        std::string operator""x(const char* str, size_t size)
-        {
+        std::string operator""x(const char* str, size_t size) {
             return std::string(str);
         }
 

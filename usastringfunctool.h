@@ -193,6 +193,18 @@ bool __cdecl StoB(const string &str);
 /// @a Convesions_Ends.
 
 
+#if __cplusplus >= 201402L
+#define exchangeX std::exchange
+#else
+template<class X, class Y = X>
+X _exchangeX(X& first, const Y& second)
+{
+    X oldV = first;
+    first = second;
+    return oldV;
+}
+#define exchangeX _exchangeX
+#endif
 
 
 /***********************************************************************
@@ -224,7 +236,7 @@ string ltrim(const string& str);
 
 string rtrim(const string& str);
 
-string trim_(const string& str);
+string _trim(const string& str);
 
 void strip(string& s);
 

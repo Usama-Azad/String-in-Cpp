@@ -11,11 +11,19 @@ vector<string> split(const string& str, const char &delimiter)
 
     while ((end = str.find(delimiter, start)) != std::string::npos)
     {
-        tokens.emplace_back(trim_(str.substr(start, end - start)));
+#if __cplusplus >= 201102L
+        tokens.emplace_back(_trim(str.substr(start, end - start)));
+#else
+        tokens.emplace_back((str.substr(start, end - start)));
+#endif
         start = end + 1;
     }
 
-    tokens.emplace_back(trim_(str.substr(start)));
+#if __cplusplus >= 201102L
+    tokens.emplace_back(_trim(str.substr(start)));
+#else
+    tokens.emplace_back((str.substr(start)));
+#endif
     return tokens;
 }
 
@@ -38,7 +46,7 @@ vector<string> split(const string& str, const char &delimiter)
         return s;
     }
 
-    string trim_(const string& str)
+    string _trim(const string& str)
     {
         return string(ltrim(rtrim(str)));
     }
@@ -58,7 +66,7 @@ string reverse(string str)
 {
     int len = str.size();
     for (int i = 0; i < len / 2; i++)
-        str.at(i) = std::exchange(str.at(len - 1 - i), str.at(i));
+        str.at(i) = exchangeX(str.at(len - 1 - i), str.at(i));
     return str;
 }
 
