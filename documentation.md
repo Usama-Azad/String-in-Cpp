@@ -264,7 +264,7 @@ vector<__STDSTRING__> splitlines();
 
 <br>
 
-### *convert<>()*
+### *castTo<>()*
 ``` cpp
         /***********************************************************************
          * @name castTo
@@ -298,7 +298,7 @@ vector<__STDSTRING__> splitlines();
          * @return bool : Return true if the string is a whitespace string, 
          * else false.
         ************************************************************************/
-        __BOOL__ is_space();
+        __BOOL__ is_space() const;
         /************************************************************************/
 ```
 <br>
@@ -312,7 +312,7 @@ vector<__STDSTRING__> splitlines();
          * @return bool : Return true if the string is an uppercase string, 
          * else false.
         ************************************************************************/
-        __BOOL__ is_upper();
+        __BOOL__ is_upper() const;
         /************************************************************************/
 ```
 <br>
@@ -326,7 +326,7 @@ vector<__STDSTRING__> splitlines();
          * @return bool : Return true if the string is a lowercase string, 
          * else false.
         ************************************************************************/
-        __BOOL__ is_lower();
+        __BOOL__ is_lower() const;
         /************************************************************************/
 ```
 <br>
@@ -340,7 +340,7 @@ vector<__STDSTRING__> splitlines();
          * @return bool : Return true if the string is an alphabetic string, 
          * else false.
         ************************************************************************/
-        __BOOL__ is_alpha();
+        __BOOL__ is_alpha() const;
         /************************************************************************/
 ```
 <br>
@@ -354,7 +354,7 @@ vector<__STDSTRING__> splitlines();
          * @return bool : Return true if the string is an alpha Numeric string,
          * else false.
         ************************************************************************/
-        __BOOL__ is_alnum();
+        __BOOL__ is_alnum() const;
         /************************************************************************/
 ```
 <br>
@@ -368,7 +368,19 @@ vector<__STDSTRING__> splitlines();
          * @return bool : Return true if the string is a numeric string,
          * else false.
         ************************************************************************/
-        __BOOL__ is_numeric();
+        __BOOL__ is_numeric() const;
+        /************************************************************************/
+```
+<br>
+
+### *is_palindrome()*
+``` cpp
+        /***********************************************************************
+         * @name is_palindrome
+         * @brief A string is palindrome if it reads the same backward as forward.
+         * @return bool : Return true if the string is palindrome, else false.
+        ************************************************************************/
+        __BOOL__ is_palindrome() const;
         /************************************************************************/
 ```
 <br>
@@ -381,7 +393,7 @@ vector<__STDSTRING__> splitlines();
          * @return bool : Return true if any char in string is space,
          * else false.
         ************************************************************************/
-        __BOOL__ is_containSpace();
+        __BOOL__ is_containSpace() const;
         /************************************************************************/
 ```
 <br>
@@ -398,7 +410,7 @@ vector<__STDSTRING__> splitlines();
          * @return bool : Return true if the string contains given type of characters,
          * else false.
         ************************************************************************/
-        __BOOL__ is_containAny(const char* type);
+        __BOOL__ is_containAny(const char* type) const;
         /************************************************************************/
 ```
 <br>
@@ -705,40 +717,6 @@ vector<__STDSTRING__> splitlines();
         /***********************************************************************
          * @name replace
          * @overload +1
-         * @brief replace all @c _old characters in given string with @c _new char.
-         * @param _old: char which is already present in the string.
-         * @param _new: new char which is replace with all @c _old chars in the string.
-         * @return usa::string& : Return a refrence string with all occurrences
-         * of @c _old character replaced by @c _new character.
-        ************************************************************************/
-        __MYSTRING_REF__ replace(__CHAR__ _old, __CHAR__ _new);
-        /************************************************************************/
-```
-<br>
-
-### *replaceFirst()*
-``` cpp
-        /***********************************************************************
-         * @name replaceFirst
-         * @overload +1
-         * @brief replace only first occurrences of @c _old characters in given
-         * string with @c _new char.
-         * @param _old: char which is already present in the string.
-         * @param _new: new char which is replace with only first occurrences of
-         * @c _old chars in the string.
-         * @return usa::string& : Return a refrence string with only first occurrences
-         * of @c _old character replaced by @c _new character.
-        ************************************************************************/
-        __MYSTRING_REF__ replaceFirst(__CHAR__ _old, __CHAR__ _new);
-        /************************************************************************/
-```
-<br>
-
-### *replace()*
-``` cpp
-        /***********************************************************************
-         * @name replace
-         * @overload +1
          * @brief replace all @c _old substrings in given string with @c _new substring.
          * @param _old: substring which is already present in the string.
          * @param _new: new substring which is replace with all @c _old substrings
@@ -746,12 +724,12 @@ vector<__STDSTRING__> splitlines();
          * @return usa::string& : Return a refrence string with all occurrences
          * of @c _old substrings replaced by @c _new substring.
         ************************************************************************/
-        __MYSTRING_REF__ replace(__STDSTRING__ _old, __STDSTRING__ _new);
+        __MYSTRING_REF__ replace(const __STDSTRING__& _old, const __STDSTRING__& _new);
         /************************************************************************/
 ```
 <br>
 
-### *replace_first()*
+### *replaceFirst()*
 ``` cpp
         /***********************************************************************
          * @name replaceFirst
@@ -764,7 +742,23 @@ vector<__STDSTRING__> splitlines();
          * @return usa::string& : Return a refrence string with only first occurrences
          * of @c _old substring replaced by @c _new substring.
         ************************************************************************/
-        __MYSTRING_REF__ replaceFirst(__STDSTRING__ _old, __STDSTRING__ _new);
+        __MYSTRING_REF__ replaceFirst(const __STDSTRING__& _old, const __STDSTRING__& _new);
+        /************************************************************************/
+```
+<br>
+
+### *replaceBlocks()*
+``` cpp
+        /***********************************************************************
+         * @name replaceBlocks
+         * @brief replace all matching blocks in the string.
+         * @param startsFrom: Starting point of the block.
+         * @param endsOn: Ending point of the block.
+         * @param replaceWith: String which is replaced by all blocks.
+         * @return usa::string | usa::string& : Return a string with all matching blocks
+         * are replaced by @p replaceWith.
+        ************************************************************************/
+        __MYSTRING__ replaceBlocks(const __CHAR__* startsFrom, const __STDSTRING__& endsOn, const __CHAR__* replaceWith) const;
         /************************************************************************/
 ```
 <br>
@@ -879,7 +873,7 @@ vector<__STDSTRING__> splitlines();
          * @param delimiter: By which function split the given string (By default " ").
          * @return vector std::string : Return a vector of splited tokens of string.
         ************************************************************************/
-        vector<__STDSTRING__> split(const char* delimiter = " ");
+        vector<__STDSTRING__> split(const __CHAR__& delimiter = 0x020);
         /************************************************************************/
 ```
 <br>

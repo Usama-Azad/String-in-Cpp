@@ -48,7 +48,7 @@ using namespace std;
  * @return string: After converting given integer to string.
 ************************************************************************/
 inline
-string __cdecl ItoS(const int &val);
+string ItoS(const int &val);
 /************************************************************************/
 
 
@@ -58,7 +58,7 @@ string __cdecl ItoS(const int &val);
  * @return string: After converting given character to string.
 ************************************************************************/
 inline
-string __cdecl CtoS(const char &val);
+string CtoS(const char &val);
 /************************************************************************/
 
 
@@ -68,7 +68,7 @@ string __cdecl CtoS(const char &val);
  * @return string: After converting given float to string.
 ************************************************************************/
 inline
-string __cdecl FtoS(const float &val);
+string FtoS(const float &val);
 /************************************************************************/
 
 
@@ -78,7 +78,7 @@ string __cdecl FtoS(const float &val);
  * @return string: After converting given double to string.
 ************************************************************************/
 inline
-string __cdecl DtoS(const double &val);
+string DtoS(const double &val);
 /************************************************************************/
 
 
@@ -88,7 +88,7 @@ string __cdecl DtoS(const double &val);
  * @return string: After converting given long to string.
 ************************************************************************/
 inline
-string __cdecl LtoS(const long &val);
+string LtoS(const long &val);
 /************************************************************************/
 
 
@@ -98,7 +98,7 @@ string __cdecl LtoS(const long &val);
  * @return string: After converting given long double to string.
 ************************************************************************/
 inline
-string __cdecl LDtoS(const long double &val);
+string LDtoS(const long double &val);
 /************************************************************************/
 
 
@@ -108,7 +108,7 @@ string __cdecl LDtoS(const long double &val);
  * @return string: After converting given bool to string.
 ************************************************************************/
 inline
-string __cdecl BtoS(const bool &val);
+string BtoS(const bool &val);
 /************************************************************************/
 
 
@@ -126,7 +126,7 @@ string __cdecl BtoS(const bool &val);
  * @return int: After converting given string to int.
 ************************************************************************/
 inline
-int __cdecl StoI(const string &str);
+int StoI(const string &str);
 /************************************************************************/
 
 
@@ -136,7 +136,7 @@ int __cdecl StoI(const string &str);
  * @return char: After converting given string to char.
 ************************************************************************/
 inline
-char __cdecl StoC(const string &str);
+char StoC(const string &str);
 /************************************************************************/
 
 
@@ -146,7 +146,7 @@ char __cdecl StoC(const string &str);
  * @return float: After converting given string to float.
 ************************************************************************/
 inline
-float __cdecl StoF(const string &str);
+float StoF(const string &str);
 /************************************************************************/
 
 
@@ -156,7 +156,7 @@ float __cdecl StoF(const string &str);
  * @return double: After converting given string to double.
 ************************************************************************/
 inline
-double __cdecl StoD(const string &str);
+double StoD(const string &str);
 /************************************************************************/
 
 
@@ -166,7 +166,7 @@ double __cdecl StoD(const string &str);
  * @return long: After converting given string to long.
 ************************************************************************/
 inline
-long __cdecl StoL(const string &str);
+long StoL(const string &str);
 /************************************************************************/
 
 
@@ -176,7 +176,7 @@ long __cdecl StoL(const string &str);
  * @return long double: After converting given string to long double.
 ************************************************************************/
 inline
-long double __cdecl StoLD(const string &str);
+long double StoLD(const string &str);
 /************************************************************************/
 
 
@@ -186,7 +186,7 @@ long double __cdecl StoLD(const string &str);
  * @return bool: After converting given string to bool.
 ************************************************************************/
 inline
-bool __cdecl StoB(const string &str);
+bool StoB(const string &str);
 /************************************************************************/
 
 
